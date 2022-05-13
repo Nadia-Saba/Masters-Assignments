@@ -12,7 +12,6 @@ public class Search {
         Scanner scanner = new Scanner(System.in);
         int input= scanner.nextInt();
         System.out.println("Please input the elements for initial state :");
-
         String initialArray[][]=new String[row][column];
         for(int i=0;i<row;i++){
             for (int j=0;j<column;j++){
@@ -20,11 +19,10 @@ public class Search {
                 initialArray[i][j]=val+"";
                 if(val == 0)
                 {
-                    initialArray[i][j] = " ";
+                    initialArray[i][j] = " "; // if input is 0 take is as blank
                 }
             }
         }
-
 
         long start = System.currentTimeMillis();
         Node node=new Node(initialArray,0,input);

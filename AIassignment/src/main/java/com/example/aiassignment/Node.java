@@ -11,7 +11,7 @@ public class Node implements Comparable<Node>{
     Set<Node> set=new HashSet<Node>();
     public Node(String[][] initialArray, int level, int input){
         this.level=level;
-        this.array = Arrays.stream(initialArray).map(String[]::clone).toArray(String[][]::new);
+        this.array = Arrays.stream(initialArray).map(String[]::clone).toArray(String[][]::new); // copy array so that we dont mess up the initial array
        Node.inputValue=input;
        if(input==1){
            // if value ==1 calculate uniform cost search
@@ -40,8 +40,11 @@ public class Node implements Comparable<Node>{
             // poll the top of priority queue
             Node currentNode=priorityQueue.poll();
             set.add(currentNode);
-            resultPrint(currentNode);
+            //resultPrint(currentNode);
             if (Arrays.deepEquals(currentNode.array, goal)) {
+                System.out.println("f(n) :" + currentNode.fn);
+                //System.out.println("h(n) :" + (currentNode.fn - currentNode.level));
+                System.out.println("Depth is g(n) :" + (currentNode.level));
                 System.out.println("Goal state is reached");
                 break;
             }
@@ -49,12 +52,12 @@ public class Node implements Comparable<Node>{
             //to the queue for moving further down.
             currentNode.expandChildNodes(currentNode,set,priorityQueue);
         }
-        for( Node node1 :set) {
+        /*for( Node node1 :set) {
             resultPrint(node1);
             System.out.println("f(n) :" + node1.fn);
             System.out.println("h(n) :" + (node1.fn - node1.level));
             System.out.println("g(n) :" + (node1.level));
-        }
+        }*/
         System.out.println("Set size "+ set.size());
         System.out.println("Queue size "+ priorityQueue.size());
     }
@@ -68,12 +71,12 @@ public class Node implements Comparable<Node>{
             System.out.println();
         }
     }
- public void expandChildNodes(Node currentNode, Set<Node>set,PriorityQueue<Node> priorityQueue){
-     int N = this.array.length;
-     for (int i=0; i< N; i++)
-     {
-         for (int j = 0; j<N; j++)
-         {
+     private void expandChildNodes(Node currentNode, Set<Node>set,PriorityQueue<Node> priorityQueue){
+        int N = this.array.length;
+        for (int i=0; i< N; i++)
+            {
+                for (int j = 0; j<N; j++)
+                {
              if (currentNode.array[i][j].trim().isEmpty()) //search for the index of space in the state(where a tile can be moved)
              {
                  if(i-1>=0)			//checks weather a tile can be moved towards the top.
@@ -109,6 +112,7 @@ public class Node implements Comparable<Node>{
          }
      }
  }
+   // Program to swap two tiles
     private String[][] swap(String[][] a,int row1, int col1, int row2, int col2)
     {
         String[][] copyOfArray = a;
@@ -147,7 +151,7 @@ public class Node implements Comparable<Node>{
                 {
                     continue;
                 }
-                index = find_index(Integer.parseInt(this.array[i][j]));
+                index = find_index(Integer.parseInt(this.array[i][j]));// find index to compare with actual index so that the difference can be calculated.
                 sum = sum + (Math.abs(i-index[0])+Math.abs(j-index[1]));
             }
         }
