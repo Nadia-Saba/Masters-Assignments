@@ -133,7 +133,7 @@ public class Node implements Comparable<Node>{
                 {
                     continue;
                 }
-                if(this.array[i][j] != goal[i][j])
+                if(this.array[i][j] != goal[i][j]) // check how many tiles are out of position from goal state
                     sum+=1;
             }
         }
@@ -151,7 +151,7 @@ public class Node implements Comparable<Node>{
                 {
                     continue;
                 }
-                index = find_index(Integer.parseInt(this.array[i][j]));// find index to compare with actual index so that the difference can be calculated.
+                index = find_index(Integer.parseInt(this.array[i][j]));// find index to compare with actual index so that the diffrence can be calculated.
                 sum = sum + (Math.abs(i-index[0])+Math.abs(j-index[1]));
             }
         }
